@@ -14,7 +14,7 @@ router.post("/register", async(req,res)=>{
     user.email = body.data.email;
     user.mobileno = body.data.mobileno;
     user.password = body.data.password;
-
+a
     user.save().then(result=>{
         res.end(JSON.stringify({status:"Success", data:result}));
     },err=>{
