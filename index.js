@@ -35,6 +35,7 @@ app.get("/", function(req,res){
 app.use("/admin",require( "./routes/admin"));
 app.use("/productcategory",require( "./routes/productcategory"));
 app.use("/product",require( "./routes/product"));
+app.use("/user",require( "./routes/user"));
 
 app.listen(8081, function(){
     console.log("Backend running on 8081.....");

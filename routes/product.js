@@ -101,15 +101,29 @@ router.post("/savevariety", async(req,res)=>{
     }
 });
 
-router.post("deletevariety", async(req,res)=>{
+router.post("/deletevariety", async(req,res)=>{
     try{
         let body = req.body;
-        let product = await Product.findByIdAndDelete(body.data.id);
+        let product = await Product.findById(body.data.id);
         let varities = [];
-        res.end(JSON.stringify({status:"Success"}));
+        for(let i=0; i<product.varities.length; i++)
+        {
+            if(product.varities[i].color != body.data.variety.color || product.varities[i].size != body.data.variety.size)
+            {
+                varities.push(product.varities[i]);
+            }
+        }
+        product.varities = varities;
+        product.save().then(result=>{
+            res.send(JSON.stringify({status:"Success",data:result}));
+            console.log(result);
+        },err=>{
+            res.send(JSON.stringify({status:"Failed",data:err}));
+        }
+        );
     }
     catch{
-        res.end(JSON.stringify({status:"Failed",data:"Something went wrong....."}));
+        res.send(JSON.stringify({status:"Failed",data:"Something went wrong....."}));
     }
 });
 
